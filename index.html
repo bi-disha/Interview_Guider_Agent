@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Trainer Agent</title>
+    <!-- Use Tailwind CSS for a modern, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use a modern font -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        /* Custom scrollbar for a cleaner look */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #e5e7eb;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main Container -->
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl flex flex-col h-[80vh] overflow-hidden">
+        
+        <!-- Header -->
+        <header class="bg-blue-600 text-white p-4 flex items-center justify-between rounded-t-2xl">
+            <h1 class="text-xl font-bold">Interview Trainer Agent</h1>
+            <!-- Status Indicator -->
+            <div class="flex items-center space-x-2">
+                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium">Online</span>
+            </div>
+        </header>
+
+        <!-- Chat messages container -->
+        <main id="chat-box" class="flex-1 p-6 overflow-y-auto space-y-4 custom-scrollbar">
+            <!-- Initial welcome message from the agent -->
+            <div class="flex justify-start">
+                <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-[70%] shadow-sm">
+                    Hello! I'm your AI interview trainer. Let's get started. What topic would you like to practice?
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading indicator -->
+        <div id="loading-indicator" class="flex justify-center p-2 hidden">
+            <div class="flex items-center space-x-2 text-blue-600">
+                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                <span>Agent is thinking...</span>
+            </div>
+        </div>
+
+        <!-- Input area -->
+        <div class="border-t border-gray-200 p-4 bg-white flex items-center space-x-4 rounded-b-2xl">
+            <input type="text" id="user-input" placeholder="Type your response..." class="flex-1 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-blue-500 transition-colors duration-200">
+            <button id="send-btn" class="bg-blue-600 text-white p-3 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        // Function to create and append a message bubble
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = `p-3 rounded-lg max-w-[70%] shadow-sm ${isUser ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`;
+            bubbleDiv.textContent = text;
+            
+            messageDiv.appendChild(bubbleDiv);
+            chatBox.appendChild(messageDiv);
+            
+            // Scroll to the bottom of the chat box
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // IMPORTANT: Replace this function with your actual IBM Cloud API call.
+        // This Flask API call is for local testing.
+        async function getAgentResponse(prompt) {
+            // Show loading indicator
+            loadingIndicator.classList.remove('hidden');
+
+            try {
+                // The URL for your local Python back-end
+                const response = await fetch('http://127.0.0.1:5000/api/interview_trainer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data.response; // Make sure this matches the key in your Python response
+            } catch (error) {
+                console.error('API call failed:', error);
+                return "Sorry, I couldn't connect to the agent. Please ensure the back-end server is running.";
+            } finally {
+                // Hide loading indicator
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        // Handle the send button click
+        sendBtn.addEventListener('click', async () => {
+            const userText = userInput.value.trim();
+            if (userText !== '') {
+                // Add the user's message to the chat
+                addMessage(userText, true);
+                userInput.value = '';
+
+                // Get and display the agent's response
+                const agentResponse = await getAgentResponse(userText);
+                addMessage(agentResponse, false);
+            }
+        });
+
+        // Handle the Enter key press in the input field
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
