@@ -43,7 +43,7 @@ Setup
 Clone the repository
 
 
-git clone https://github.com/your-username/IBM-AI-Agent.git
+git clone https:https://github.com/bi-disha/Interview_Guider_Agent.git
 cd IBM-AI-Agent
 Create .env file in project root and add your IBM credentials:
 
