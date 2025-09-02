@@ -1,6 +1,6 @@
 # IBM AI Agent
 
-A local chatbot application built with **FastAPI** and a **beautiful HTML frontend**, powered by **IBM Watsonx.ai**.
+A local chatbot application built with **FastAPI** and a **HTML frontend**, powered by **IBM Watsonx.ai**.
 
 ---
 
@@ -47,7 +47,7 @@ git clone https://github.com/your-username/IBM-AI-Agent.git
 cd IBM-AI-Agent
 Create .env file in project root and add your IBM credentials:
 
-env
+## env
 
 IBM_API_KEY=<your_ibm_api_key>
 IBM_AGENT_URL=<your_ibm_agent_url>
@@ -70,7 +70,7 @@ Open the chatbot frontend in your browser:
 http://localhost:8000/home
 Type your message and click Send to communicate with the IBM AI agent.
 
-For API testing (Swagger UI):
+## For API testing (Swagger UI):
 
 
 http://localhost:8000/docs
@@ -79,6 +79,6 @@ Do not commit .env or venv/ to GitHub — these contain secrets and environment-
 
 Ensure your IBM credentials are valid and have access to the deployed Watsonx.ai model.
 
-License
+## License
 MIT License
 
