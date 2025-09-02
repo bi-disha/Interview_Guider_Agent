@@ -1,96 +1,84 @@
-Interview Trainer Agent 🎯
+# IBM AI Agent
 
-An AI-powered Interview Trainer Agent built with Flask (Python backend) and a modern chat UI (HTML + TailwindCSS frontend).
-This project was developed as part of the IBM Cloud Agentic AI Project.
+A local chatbot application built with **FastAPI** and a **beautiful HTML frontend**, powered by **IBM Watsonx.ai**.
 
-🚀 Features
+---
 
-🧑‍💻 Interactive chat interface to simulate interview practice.
+## Features
 
-🔄 Backend API (Flask) that connects to IBM Cloud Agent service.
+- FastAPI backend serving the IBM AI agent
+- Interactive frontend at `/home` with a modern chat interface
+- Scrollable chat window for long responses
+- POST `/api/generate` endpoint for sending prompts
+- Works locally at `http://localhost:8000`
 
-🌍 CORS enabled so frontend and backend work together seamlessly.
+---
 
-🔒 Environment variables (.env) for API keys (secure, not hardcoded).
+## Project Structure
 
-🛠️ Demo mode if no IBM Cloud API key is provided (uses sample interview Q&A).
-
-📂 Project Structure
-IBM-Interview-Trainer-Agent/
-│
-├── app.py              # Flask backend
-├── index.html          # Chat UI (frontend)
-├── requirements.txt    # Python dependencies
-├── .env                # Environment variables (NOT committed to GitHub)
-└── .gitignore          # Ignore .env and cache files
-
-⚙️ Installation & Setup
-
-Clone this repository
-
-git clone https://github.com/your-username/IBM-Interview-Trainer-Agent.git
-cd IBM-Interview-Trainer-Agent
+IBM AI AGENT PROJECT/
+├── backend/
+│ ├── main.py # FastAPI server
+│ ├── ibm_client.py # API call functions
+│ └── ibm_auth.py # IBM authentication functions
+├── index.html # Chatbot frontend
+├── venv/ # Python virtual environment (ignored in Git)
+└── .env # Environment variables (API keys, ignored)
 
 
-Create a virtual environment (recommended)
 
-python -m venv venv
-source venv/bin/activate   # (Linux/Mac)
-venv\Scripts\activate      # (Windows)
+## Requirements
 
+- Python 3.9+
+- FastAPI
+- Uvicorn
+- Requests
+- python-dotenv
 
-Install dependencies
+Install dependencies:
+
 
 pip install -r requirements.txt
+Setup
+Clone the repository
 
 
-Set up environment variables
-Create a .env file in the project root:
+git clone https://github.com/your-username/IBM-AI-Agent.git
+cd IBM-AI-Agent
+Create .env file in project root and add your IBM credentials:
 
-IBM_API_KEY=YOUR_IBM_CLOUD_API_KEY_HERE
-IBM_API_URL=YOUR_IBM_CLOUD_ASSISTANT_ENDPOINT_HERE
+env
 
-
-Run the backend server
-
-python app.py
-
-
-The server will start at http://127.0.0.1:5000
-.
-
-Run the frontend
-
-Option 1: Open index.html directly in your browser.
-
-Option 2 (recommended): Start a simple HTTP server:
-
-python -m http.server 8000
+IBM_API_KEY=<your_ibm_api_key>
+IBM_AGENT_URL=<your_ibm_agent_url>
+Activate virtual environment
 
 
-Open: http://127.0.0.1:8000/index.html
+# Windows PowerShell
+source venv/Scripts/activate
 
-🖼️ Screenshots
-
-Add your screenshots here (taken from your IBM Cloud preview page).
-Example:
-
-
+# Or Linux/Mac
+source venv/bin/activate
+Run the FastAPI server
 
 
-📌 Notes
+python -m backend.main
+Usage
+Open the chatbot frontend in your browser:
 
-If .env is not configured, the backend runs in demo mode with sample responses.
 
-If .env is properly configured with IBM Cloud credentials, the backend will connect to the real IBM Watson Assistant / Agent service.
+http://localhost:8000/home
+Type your message and click Send to communicate with the IBM AI agent.
 
-🛡️ Security
+For API testing (Swagger UI):
 
-Never commit your .env file with real API keys to GitHub.
 
-.gitignore already ensures .env is not pushed.
+http://localhost:8000/docs
+Notes
+Do not commit .env or venv/ to GitHub — these contain secrets and environment-specific files.
 
-🧑‍💻 Author
+Ensure your IBM credentials are valid and have access to the deployed Watsonx.ai model.
 
-Your Name
-Project developed for IBM SkillsBuild Agentic AI Project
+License
+MIT License
+
