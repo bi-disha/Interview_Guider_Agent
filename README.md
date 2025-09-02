@@ -16,13 +16,21 @@ A local chatbot application built with **FastAPI** and a **HTML frontend**, powe
 
 ## Project Structure
 
+
 IBM AI AGENT PROJECT/
+
 ├── backend/
+
 │ ├── main.py # FastAPI server
+
 │ ├── ibm_client.py # API call functions
+
 │ └── ibm_auth.py # IBM authentication functions
+
 ├── index.html # Chatbot frontend
+
 ├── venv/ # Python virtual environment (ignored in Git)
+
 └── .env # Environment variables (API keys, ignored)
 
 
@@ -39,18 +47,32 @@ Install dependencies:
 
 
 pip install -r requirements.txt
+
+
 Setup
+
+
 Clone the repository
 
 
 git clone https:https://github.com/bi-disha/Interview_Guider_Agent.git
+
+
 cd IBM-AI-Agent
+
+
 Create .env file in project root and add your IBM credentials:
 
 ## env
 
 IBM_API_KEY=<your_ibm_api_key>
+
+
+
 IBM_AGENT_URL=<your_ibm_agent_url>
+
+
+
 Activate virtual environment
 
 
@@ -68,14 +90,25 @@ Open the chatbot frontend in your browser:
 
 
 http://localhost:8000/home
+
+
+
 Type your message and click Send to communicate with the IBM AI agent.
 
 ## For API testing (Swagger UI):
 
 
 http://localhost:8000/docs
-Notes
+
+
+
+## Notes
+
+
 Do not commit .env or venv/ to GitHub — these contain secrets and environment-specific files.
+
+
+
 
 Ensure your IBM credentials are valid and have access to the deployed Watsonx.ai model.
 
